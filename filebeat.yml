@@ -1,0 +1,32 @@
+# see https://elasticsearch.example.com/_cat/health?v
+# see https://elasticsearch.example.com/_cat/indices?v
+# see https://elasticsearch.example.com/_cat/templates?v
+# see https://elasticsearch.example.com/_template/filebeat-6.5.4
+# see https://elasticsearch.example.com/filebeat-6.5.4-*/_search
+# see https://elasticsearch.example.com/filebeat-6.5.4-*/_search?q=fileset.name:error
+filebeat.config.modules:
+  enabled: true
+  path: ${path.config}/modules.d/*.yml
+output.elasticsearch:
+  enabled: true
+  hosts:
+    - https://elasticsearch.example.com:443
+  ssl.enabled: true
+  # ssl.certificate_authorities:
+  #   - c:/filebeat/tls/beats-example-ca-crt.pem
+setup.kibana.host: https://kibana.example.com:443
+setup.kibana.ssl.enabled: true
+setup.template.settings:
+  index.number_of_shards: 5
+  index.number_of_replicas: 0 # for testing purposes, we do not need replicas (and for not showing an
+                              # health yellow status alert on our single node cluster).
+#setup.template.name: filebeat
+#setup.template.pattern: filebeat-*
+#output.elasticsearch.index: filebeat-%{+yyyy.MM.dd}
+logging.level: info
+logging.metrics.enabled: false
+logging.to_files: true
+logging.files:
+  name: filebeat.log
+  rotateeverybytes: 10485760 # 10MB
+  keepfiles: 7
