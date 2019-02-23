@@ -26,11 +26,11 @@ Filebeat creates the following Elasticsearch artifacts:
 
 | type     | name           | url                                                                                        | notes                                        |
 |----------|----------------|--------------------------------------------------------------------------------------------|----------------------------------------------|
-| template | filebeat-6.5.4 | [_template/filebeat-6.5.4](https://elasticsearch.example.com/_template/filebeat-6.5.4) | contains all the modules definitions |
-| pipeline | filebeat-6.5.4-iis-error-default | [_ingest/pipeline/filebeat-6.5.4-iis-error-default](https://elasticsearch.example.com/_ingest/pipeline/filebeat-6.5.4-iis-error-default) | IIS HTTPERR log ingest pipeline |
-| pipeline | filebeat-6.5.4-iis-access-default | [_ingest/pipeline/filebeat-6.5.4-iis-access-default](https://elasticsearch.example.com/_ingest/pipeline/filebeat-6.5.4-iis-access-default) | IIS access log ingest pipeline |
+| template | filebeat-6.6.1 | [_template/filebeat-6.6.1](https://elasticsearch.example.com/_template/filebeat-6.6.1) | contains all the modules definitions |
+| pipeline | filebeat-6.6.1-iis-error-default | [_ingest/pipeline/filebeat-6.6.1-iis-error-default](https://elasticsearch.example.com/_ingest/pipeline/filebeat-6.6.1-iis-error-default) | IIS HTTPERR log ingest pipeline |
+| pipeline | filebeat-6.6.1-iis-access-default | [_ingest/pipeline/filebeat-6.6.1-iis-access-default](https://elasticsearch.example.com/_ingest/pipeline/filebeat-6.6.1-iis-access-default) | IIS access log ingest pipeline |
 
-Filebeat will tail all the log files for log messages, batch them, then send them in [Elasticsearch bulk requests](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/docs-bulk.html) to a index with the pattern `filebeat-%{[beat.version]}-%{+yyyy.MM.dd}` (e.g. `filebeat-6.5.4-2018.12.30`).
+Filebeat will tail all the log files for log messages, batch them, then send them in [Elasticsearch bulk requests](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/docs-bulk.html) to a index with the pattern `filebeat-%{[beat.version]}-%{+yyyy.MM.dd}` (e.g. `filebeat-6.6.1-2018.12.30`).
 
 ## IIS logs
 
@@ -41,7 +41,7 @@ IIS logs are normally stored at:
 
 The IIS logs are buffered for some time (one minute by default) before being flushed/written to disk. You can manually force a flush with the command `netsh http flush logbuffer` (flushes the HTTP.sys log buffer to disk).
 
-The IIS access logs can be customized by selecting which fields will be logged, **BUT, by default, filebeat only supports three configurations**. The three supported configurations are defined as [elasticsearch grok expressions](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/grok-processor.html) inside the `C:\filebeat\module\iis\access\ingest\default.json` file (or the [online version source code](https://github.com/elastic/beats/blob/v6.5.4/filebeat/module/iis/access/ingest/default.json)) and correspond to these:
+The IIS access logs can be customized by selecting which fields will be logged, **BUT, by default, filebeat only supports three configurations**. The three supported configurations are defined as [elasticsearch grok expressions](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/grok-processor.html) inside the `C:\filebeat\module\iis\access\ingest\default.json` file (or the [online version source code](https://github.com/elastic/beats/blob/v6.6.1/filebeat/module/iis/access/ingest/default.json)) and correspond to these:
 
 | #1 | #2 | #3 | IIS field        | filebeat field                 | grok expression                          |
 |----|----|----|------------------|--------------------------------|------------------------------------------|
@@ -88,9 +88,9 @@ Content-Type: application/json; charset=UTF-8
 
 {
     "index": {
-        "_index": "filebeat-6.5.4-2018.12.30",
+        "_index": "filebeat-6.6.1-2018.12.30",
         "_type": "doc",
-        "pipeline": "filebeat-6.5.4-iis-access-default"
+        "pipeline": "filebeat-6.6.1-iis-access-default"
     }
 }
 {
@@ -103,7 +103,7 @@ Content-Type: application/json; charset=UTF-8
         "type": "log"
     },
     "beat": {
-        "version": "6.5.4",
+        "version": "6.6.1",
         "name": "beats",
         "hostname": "beats"
     },
@@ -129,7 +129,7 @@ content-length: 123
     "errors": false,
     "items": [{
         "index": {
-            "_index": "filebeat-6.5.4-2018.12.30",
+            "_index": "filebeat-6.6.1-2018.12.30",
             "_type": "doc",
             "_id": "bYBF_2cBPVbU0mdFMkxx",
             "_version": 1,
@@ -150,7 +150,7 @@ content-length: 123
 Which, after being transformed by the filebeat elasticsearch ingest pipeline, will be stored in elasticsearch as this request/response shows:
 
 ```json
-GET /filebeat-6.5.4-2018.12.30/doc/bYBF_2cBPVbU0mdFMkxx HTTP/1.1
+GET /filebeat-6.6.1-2018.12.30/doc/bYBF_2cBPVbU0mdFMkxx HTTP/1.1
 Host: localhost:9200
 Connection: close
 
@@ -159,7 +159,7 @@ content-type: application/json; charset=UTF-8
 content-length: 123
 
 {
-    "_index": "filebeat-6.5.4-2018.12.30",
+    "_index": "filebeat-6.6.1-2018.12.30",
     "_type": "doc",
     "_id": "bYBF_2cBPVbU0mdFMkxx",
     "_version": 1,
@@ -219,7 +219,7 @@ content-length: 123
         "beat": {
             "hostname": "beats",
             "name": "beats",
-            "version": "6.5.4"
+            "version": "6.6.1"
         },
         "host": {
             "name": "beats"
@@ -228,13 +228,13 @@ content-length: 123
 }
 ```
 
-The pipeline (the most import part is the [grok processor](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/grok-processor.html) block) is defined as (see the `C:\filebeat\module\iis\access\ingest\default.json` file or the [online version source code](https://github.com/elastic/beats/blob/v6.5.4/filebeat/module/iis/access/ingest/default.json)):
+The pipeline (the most import part is the [grok processor](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/grok-processor.html) block) is defined as (see the `C:\filebeat\module\iis\access\ingest\default.json` file or the [online version source code](https://github.com/elastic/beats/blob/v6.6.1/filebeat/module/iis/access/ingest/default.json)):
 
 ```json
-GET _ingest/pipeline/filebeat-6.5.4-iis-access-default
+GET _ingest/pipeline/filebeat-6.6.1-iis-access-default
 
 {
-    "filebeat-6.5.4-iis-access-default": {
+    "filebeat-6.6.1-iis-access-default": {
         "description": "Pipeline for parsing IIS access logs. Requires the geoip and user_agent plugins.",
         "processors": [{
                 "grok": {

@@ -2,8 +2,8 @@
 
 $serviceHome = 'C:\filebeat'
 $serviceName = 'filebeat'
-$archiveUrl = 'https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-6.5.4-windows-x86_64.zip'
-$archiveHash = 'f9f08ab2bdccf25328d59b34da67b8bb5f0cc92be5c9d385fd350a570a4d2d7460c8514fb495c19bcc81462d4b077e33579369a1e0d3b0ed7439394ac3ab0a8f'
+$archiveUrl = 'https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-6.6.1-windows-x86_64.zip'
+$archiveHash = '5dfe05b34e92c4c2866cd17c106a027ef528475bcb88ba3c1196b4ad60a2eafc20f7d9f658bef6a2891662bfb09c9a9b1d6c6b06643d7294d43ffbca24854cdd'
 $archiveName = Split-Path $archiveUrl -Leaf
 $archivePath = "$env:TEMP\$archiveName"
 

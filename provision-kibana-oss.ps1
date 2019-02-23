@@ -5,8 +5,8 @@ Update-SessionEnvironment
 $serviceHome = 'C:\kibana'
 $serviceName = 'kibana'
 $serviceUsername = "NT SERVICE\$serviceName"
-$archiveUrl = 'https://artifacts.elastic.co/downloads/kibana/kibana-oss-6.5.4-windows-x86_64.zip'
-$archiveHash = '7c5da5bffd11fe698090e02bb9a68f41e537d1f48a93ac252f347a43fb344b67cf58d0bf7d3b4d0f5e2d5c7dfa8be2459034d183911aa2dddcaf9ded320ac788'
+$archiveUrl = 'https://artifacts.elastic.co/downloads/kibana/kibana-oss-6.6.1-windows-x86_64.zip'
+$archiveHash = 'a87eedbd2820c2e9eaa595f8775c4c98fc4a2f2c37f43b28c3a60b6b0e6db7b95d4a5c2e14911a22e3525ab895e26063b2f1be8543457ba98ce1e08f40422e07'
 $archiveName = Split-Path $archiveUrl -Leaf
 $archivePath = "$env:TEMP\$archiveName"
 
