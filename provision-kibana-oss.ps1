@@ -1,6 +1,5 @@
-choco install -y server-jre8 nssm
+Import-Module Carbon
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
-Update-SessionEnvironment
 
 $serviceHome = 'C:\kibana'
 $serviceName = 'kibana'
@@ -18,8 +17,7 @@ if ($archiveHash -ne $archiveActualHash) {
 }
 
 Write-Host 'Installing Kibana...'
-mkdir $serviceHome | Out-Null
-Expand-Archive $archivePath -DestinationPath $serviceHome
+Get-ChocolateyUnzip -FileFullPath $archivePath -Destination $serviceHome
 $archiveTempPath = Resolve-Path $serviceHome\kibana-*
 Move-Item $archiveTempPath\* $serviceHome
 Remove-Item $archiveTempPath

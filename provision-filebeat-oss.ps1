@@ -1,3 +1,6 @@
+Import-Module Carbon
+Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
+
 # NB filebeat is run as SYSTEM as a simple way to be able to read any log files.
 
 $serviceHome = 'C:\filebeat'
@@ -36,8 +39,7 @@ if ($archiveHash -ne $archiveActualHash) {
 }
 
 Write-Host 'Installing filebeat...'
-mkdir $serviceHome | Out-Null
-Expand-Archive $archivePath -DestinationPath $serviceHome
+Get-ChocolateyUnzip -FileFullPath $archivePath -Destination $serviceHome
 $archiveTempPath = Resolve-Path $serviceHome\filebeat-*
 Move-Item $archiveTempPath\* $serviceHome
 Remove-Item $archiveTempPath
