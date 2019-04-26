@@ -5,8 +5,8 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
 
 $serviceHome = 'C:\filebeat'
 $serviceName = 'filebeat'
-$archiveUrl = 'https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-6.6.1-windows-x86_64.zip'
-$archiveHash = '5dfe05b34e92c4c2866cd17c106a027ef528475bcb88ba3c1196b4ad60a2eafc20f7d9f658bef6a2891662bfb09c9a9b1d6c6b06643d7294d43ffbca24854cdd'
+$archiveUrl = 'https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.0.0-windows-x86_64.zip'
+$archiveHash = '7adf58a365a063f449e2b4dc96e61236ede484377488cb28f4061c61f4d858f00ee45fa670e3b1e5354e7a2c1a450cd8cdbdad04bc9c4853373658810061364c'
 $archiveName = Split-Path $archiveUrl -Leaf
 $archivePath = "$env:TEMP\$archiveName"
 

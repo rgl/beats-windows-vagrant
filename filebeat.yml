@@ -1,9 +1,9 @@
 # see https://elasticsearch.example.com/_cat/health?v
 # see https://elasticsearch.example.com/_cat/indices?v
 # see https://elasticsearch.example.com/_cat/templates?v
-# see https://elasticsearch.example.com/_template/filebeat-6.6.1
-# see https://elasticsearch.example.com/filebeat-6.6.1-*/_search
-# see https://elasticsearch.example.com/filebeat-6.6.1-*/_search?q=fileset.name:error
+# see https://elasticsearch.example.com/_template/filebeat-7.0.0
+# see https://elasticsearch.example.com/filebeat-7.0.0-*/_search
+# see https://elasticsearch.example.com/filebeat-7.0.0-*/_search?q=fileset.name:error
 filebeat.config.modules:
   enabled: true
   path: ${path.config}/modules.d/*.yml
@@ -14,6 +14,7 @@ output.elasticsearch:
   ssl.enabled: true
   # ssl.certificate_authorities:
   #   - c:/filebeat/tls/beats-example-ca-crt.pem
+  #proxy_url: http://localhost:8888
 setup.kibana.host: https://kibana.example.com:443
 setup.kibana.ssl.enabled: true
 setup.template.settings:

@@ -1,12 +1,14 @@
-choco install -y server-jre8
+Import-Module Carbon
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
+
+choco install -y adoptopenjdk11jre
 Update-SessionEnvironment
 
 $elasticsearchHome = 'C:\elasticsearch'
 $elasticsearchServiceName = 'elasticsearch'
 $elasticsearchServiceUsername = "NT SERVICE\$elasticsearchServiceName"
-$archiveUrl = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-6.6.1.zip'
-$archiveHash = '025cd11e8876a1bac3b2e9f8cb1de677f84aebd55f3e60f9a4c2e1bfa7fa0d9a15f9a427a1bdd174375eaebc51b1082ba0dd4d267226c5a0a1ab8eab9a177b3b'
+$archiveUrl = 'https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.0.0-no-jdk-windows-x86_64.zip'
+$archiveHash = 'd16e92d6e4eadafd9c3cac89a9f421ffcdeff389c4522d231b5089d3ce236ed4198378b3606903706514df4cdeb770ffbacf63edf2ea90451da6238619fff157'
 $archiveName = Split-Path $archiveUrl -Leaf
 $archivePath = "$env:TEMP\$archiveName"
 
@@ -77,8 +79,6 @@ Grant-Permission $elasticsearchHome\config\elasticsearch.keystore Administrators
 Grant-Permission $elasticsearchHome\config\elasticsearch.keystore $elasticsearchServiceUsername FullControl
 
 # install plugins.
-Install-ElasticsearchPlugin 'ingest-geoip'
-Install-ElasticsearchPlugin 'ingest-user-agent'
 Install-ElasticsearchPlugin 'ingest-attachment'
 
 Write-Host "Starting the $elasticsearchServiceName service..."
